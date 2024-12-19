@@ -1,0 +1,144 @@
+/* General Style */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+#main {
+    background-color:darkseagreen;
+}
+
+/* Layer One */
+#layer-one {
+    background-image: url('../images/sungai.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efek blur untuk background */
+#layer-one::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit; /* Gunakan gambar yang sama seperti layer */
+    backdrop-filter: blur(1000px); /* Efek blur */
+    z-index: 1;
+}
+
+/* Box untuk teks */
+#layer-one .title {
+    position: relative; /* Supaya berada di atas blur */
+    z-index: 2; /* Menjamin box teks di atas layer blur */
+    padding: 20px;
+    max-width: 70%;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparan putih */
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sedikit bayangan */
+}
+
+#layer-one .title h1 {
+    font-weight: 700;
+    font-size: 32px;
+    color: #164978;
+    margin-bottom: 10px;
+}
+
+#layer-one .title p {
+    font-weight: 400;
+    font-size: 18px;
+    color: #333;
+}
+
+#layer-one .title button {
+    background-color: #164978;
+    color: white;
+    margin-top: 20px;
+    font-size: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#layer-one .title button:hover {
+    background-color: #0d355e;
+}
+
+/* Layer Two */
+#layer-two {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #dae5d3;
+}
+
+#layer-two h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+/* Card Container */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Row untuk 4 card */
+.card-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Style untuk setiap card */
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-title {
+    padding: 15px;
+    background-color: #164978;
+    color: white;
+}
+
+.card-title h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.card-title p {
+    font-size: 14px;
+    margin: 5px 0 0;
+}

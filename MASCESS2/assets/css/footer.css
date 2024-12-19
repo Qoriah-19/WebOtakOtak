@@ -1,0 +1,59 @@
+footer {
+    background-color: #025446;
+    padding: 30px 50px;
+    color: white;
+}
+
+.footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Kolom responsif */
+    gap: 20px; /* Tambahkan jarak antar kolom */
+}
+
+.footer h5 {
+    font-size: 25px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    margin-top: 20px; /* Tambahkan jarak atas */
+}
+
+.footer .info {
+    margin-top: 10px; /* Hindari margin negatif */
+}
+
+.footer .medsos {
+    display: flex;
+    column-gap: 0.7rem;
+}
+
+.footer .medsos img {
+    width: 25px;
+}
+
+.footer .info p {
+    letter-spacing: 1px;
+    line-height: 1.5; /* Gunakan `em` untuk konsistensi */
+    font-size: 13px;
+    margin-bottom: 10px; /* Tambahkan jarak bawah */
+}
+
+.footer .info a {
+    color: white;
+    font-size: 13px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.border {
+    margin: 40px auto;
+    width: 60%;
+    border: 1px solid white;
+}
+
+.crg {
+    text-align: center;
+    font-size: 13px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}

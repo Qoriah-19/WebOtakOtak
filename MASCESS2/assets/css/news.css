@@ -1,0 +1,94 @@
+#news {
+    padding: 60px 30px;
+    background-image: url('../images/background1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Tinggi minimum layar */
+}
+
+#news .title {
+    font-size: 36px; /* Ukuran lebih besar */
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #164978;
+    position: relative;
+    z-index: 10;
+}
+
+#news .data-list {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    max-width: 800px; /* Membatasi lebar konten */
+}
+
+#news .data-list img {
+    max-width: 400px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+#news .data-list .informasi {
+    flex: 1;
+    text-align: left;
+}
+
+#news .data-list .informasi .subtitle {
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#news .data-list .informasi p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+#news .data-list ul {
+    margin: 0 0 10px 20px;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+#news .data-list #button {
+    background-color: #164978;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#news .data-list #button:hover {
+    background-color: #122d5c;
+}
+
+#news .data-list #button img {
+    width: 16px;
+    height: 16px;
+}
+a.highlight {
+    color: blue;
+    text-decoration: none;
+}
+
+a.highlight:hover {
+    text-decoration: underline;
+}
+

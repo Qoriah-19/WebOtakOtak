@@ -1,0 +1,104 @@
+/* Tambahkan ke dashboard.css atau file CSS yang relevan */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px 40px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #555555;
+}
+
+input[type="text"],
+input[type="file"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #555555;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 120px;
+    resize: none;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #5a67d8;
+    box-shadow: 0 0 5px rgba(90, 103, 216, 0.3);
+}
+
+button {
+    width: 100%;
+    background-color: #5a67d8;
+    color: #ffffff;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4c51bf;
+}
+
+p {
+    font-size: 14px;
+    color: red;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+/* Membuat tata letak lebih besar dan responsif */
+@media (max-width: 768px) {
+    form {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 22px;
+    }
+    
+    button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}

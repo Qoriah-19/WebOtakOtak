@@ -1,0 +1,119 @@
+/* Style umum untuk halaman sejarah */
+#news {
+    padding: 60px 30px;
+    background-image: url('../images/sungai6.png'); /* Gambar latar belakang */
+    background-repeat: no-repeat;
+    background-size: cover; /* Menjaga gambar tetap ter-cover */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Tinggi minimum layar */
+    position: relative; /* Menjaga konten tetap di atas latar belakang */
+}
+
+/* Pseudo-element untuk efek blur pada background */
+#news::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/sungai6.png'); /* Gambar latar belakang */
+    background-repeat: no-repeat;
+    background-size: cover; /* Menjaga gambar tetap ter-cover */
+    background-position: center; /* Memastikan gambar tetap terpusat */
+    filter: blur(8px); /* Efek blur pada gambar latar belakang */
+    z-index: 1; /* Menempatkan blur di bawah konten */
+}
+/* Menambahkan Flexbox untuk tata letak vertikal dan horizontal */
+header {
+    display: flex;
+    justify-content: center; /* Menyelaraskan secara horizontal */
+    align-items: center; /* Menyelaraskan secara vertikal */
+    height: 100px; /* Menetapkan tinggi header */
+    background-color: #f8f8f8; /* Warna latar belakang */
+}
+
+#detail_page {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;  /* Warna latar belakang kotak */
+    border-radius: 8px;  /* Membuat sudut kotak membulat */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Memberikan bayangan ringan pada kotak */
+}
+
+
+
+.store-info h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.store-info img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.store-details, .order-section, .social-media a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.order-section button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.order-section button:hover {
+    background-color: #45a049;
+}
+
+/* Styling untuk tombol kembali */
+.back-to-home {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-btn {
+    background-color: #4CAF50; /* Warna latar belakang tombol */
+    color: white;              /* Warna teks tombol */
+    padding: 10px 20px;        /* Padding di sekitar teks */
+    text-align: center;        /* Menyusun teks di tengah */
+    font-size: 16px;           /* Ukuran font */
+    border: none;              /* Menghilangkan border */
+    border-radius: 5px;        /* Sudut tombol menjadi melengkung */
+    cursor: pointer;           /* Menambahkan kursor pointer */
+    transition: background-color 0.3s; /* Efek transisi untuk perubahan warna */
+}
+
+.back-btn:hover {
+    background-color: #45a049; /* Warna tombol saat dihover */
+}
+
+
+/* Social Media Links */
+.social-media {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.social-media a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 18px;
+}
+
+.social-media a:hover {
+    text-decoration: underline;
+}

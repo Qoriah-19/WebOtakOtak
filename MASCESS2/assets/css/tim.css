@@ -1,0 +1,119 @@
+/* Resetting some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Latar belakang untuk seluruh halaman */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('../assets/images/acara.png'); /* Gambar latar belakang */
+    background-size: cover; /* Memastikan gambar menutupi seluruh layar */
+    background-position: center center; /* Memastikan gambar tetap di tengah */
+    background-repeat: no-repeat; /* Tidak mengulang gambar */
+    background-attachment: fixed; /* Agar gambar tetap diam ketika scroll */
+    min-height: 100vh; /* Mengisi seluruh layar */
+    color: #fff; /* Warna teks agar kontras dengan latar belakang */
+    margin: 0; /* Menghilangkan margin default body */
+}
+
+
+/* Mengatur padding dan margin untuk section */
+section {
+    padding: 60px 30px;
+    text-align: center;
+}
+
+/* Judul untuk setiap section */
+h2 {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Styling untuk container dosen */
+.dosen-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* Gaya untuk setiap dosen */
+.dosen {
+    background-color: rgba(0, 0, 0, 0.7); /* Latar belakang semi-transparan */
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+/* Efek saat hover pada dosen */
+.dosen:hover {
+    transform: scale(1.05);
+}
+
+/* Gaya gambar dosen */
+.dosen-img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+}
+
+/* Gaya untuk informasi dosen */
+.dosen-info h3,
+.dosen-info p {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+/* Styling untuk tim anggota */
+.tim-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Gaya untuk setiap anggota tim */
+.anggota {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+/* Efek saat hover pada anggota tim */
+.anggota:hover {
+    transform: scale(1.05);
+}
+
+/* Gaya gambar anggota tim */
+.tim-img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+}
+
+/* Gaya untuk informasi anggota tim */
+.anggota-info h3,
+.anggota-info p {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+/* Responsive: Mengatur agar layout menyesuaikan ukuran layar */
+@media (max-width: 768px) {
+    .dosen-container, .tim-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,146 @@
+/* Reset dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Navbar Container */
+.nav {
+    display: flex;
+    justify-content: space-between; /* Logo kiri, menu kanan */
+    align-items: center;
+    background-color: #025446; /* Warna navbar */
+    padding: 15px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1000;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo img {
+    height: 50px; /* Ukuran logo */
+    margin-right: 10px;
+}
+
+.nav-logo h2 {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Menu Utama */
+.nav-menu {
+    list-style: none; /* Menghilangkan bullet point default */
+    display: flex;
+    justify-content: center; /* Menu menjadi di tengah */
+    margin: 0;
+    padding: 0; /* Menghilangkan padding default */
+}
+
+.nav-menu li {
+    position: relative; /* Untuk dropdown */
+}
+
+.nav-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.nav-menu a:hover {
+    background-color: #091017; /* Warna hover */
+    border-radius: 5px;
+}
+
+/* Dropdown Menu */
+.nav-menu ul {
+    list-style: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(26, 76, 127, 0.9); /* Warna transparan */
+    width: 180px;
+    border-radius: 5px;
+    display: none; /* Sembunyikan dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+.nav-menu li:hover > ul {
+    display: block; /* Tampilkan dropdown saat hover */
+}
+
+.nav-menu ul li a {
+    padding: 10px 20px;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.nav-menu ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Efek hover */
+    border-radius: 5px;
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column; /* Stack logo dan menu */
+        align-items: flex-start;
+    }
+
+    .nav-menu {
+        display: none; /* Default: sembunyikan menu */
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-menu.active {
+        display: flex; /* Tampilkan menu saat aktif */
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu ul {
+        position: static;
+        width: 100%;
+    }
+
+    .nav-menu ul li a {
+        padding: 10px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 769px) {
+    .hamburger {
+        display: none; /* Sembunyikan hamburger menu di desktop */
+    }
+}
