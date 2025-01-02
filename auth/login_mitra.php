@@ -19,22 +19,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Email tidak valid.";
     } else {
         // Mencari pengguna berdasarkan email
-        $stmt = $pdo->prepare("SELECT * FROM mitra WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT * FROM mitra WHERE Email_Mitra = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
         // Memverifikasi password jika email ditemukan
-        if ($user && password_verify($password, $user['password'])) {
-            // Menyimpan data pengguna di session
-            $_SESSION['user_id'] = $user['Id_Mitra'];
-            $_SESSION['username'] = $user['nama'];
-            $_SESSION['role'] = 'mitra'; // Menyimpan role pengguna di session
+        if ($user) {
+            // Cek status akun
+            if ($user['Status'] === 'menunggu') {
+                $error = "Akun Anda sedang menunggu konfirmasi dari admin.";
+            } elseif (password_verify($password, $user['Password_Mitra'])) {
+                // Menyimpan data pengguna di session
+                $_SESSION['user_id'] = $user['Id_Mitra'];
+                $_SESSION['username'] = $user['Nama_Mitra'];
+                $_SESSION['role'] = 'mitra';
 
-            // Redirect ke halaman dashboard
-            header('Location: ../mitra/dashboard.php');
-            exit();
+                // Redirect ke halaman dashboard
+                header('Location: ../mitra/dashboard.php');
+                exit();
+            } else {
+                $error = "Email atau password salah.";
+            }
         } else {
-            $error = "Email atau password salah.";
+            $error = "Email tidak ditemukan.";
         }
     }
 }
@@ -47,16 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Mitra</title>
     <link rel="stylesheet" href="../assets/css/auth.css">
-    <script src="../assets/js/script.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <main class="main">
         <img src="../assets/images/login_image.png" alt="login">
         <form class="container_form" action="login_mitra.php" method="post">
-            <h1>Selamat Datang Di Siberna</h1>
+            <h1>Selamat Datang Di OTAKA</h1>
             
             <!-- Input Email -->
             <input type="email" id="email" name="email" placeholder="Email" required>
@@ -66,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <!-- Error message -->
             <?php if (isset($error)): ?>
-                <p style="color: red;"><?php echo $error; ?></p>
+                <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
             <?php endif; ?>
             
             <!-- Login Button -->
