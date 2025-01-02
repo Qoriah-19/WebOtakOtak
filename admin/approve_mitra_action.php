@@ -21,10 +21,10 @@ if (!$id || !$action) {
 // Proses aksi berdasarkan `action`
 if ($action === 'approve' || $action === 'reject') {
     // Tentukan status baru berdasarkan aksi
-    $status = $action === 'approve' ? 'approved' : 'rejected';
+    $status = $action === 'approve' ? 'disetujui' : 'ditolak';
 
     // Update status mitra di database
-    $stmt = $pdo->prepare("UPDATE mitra SET status = ? WHERE Id_Mitra = ?");
+    $stmt = $pdo->prepare("UPDATE mitra SET Status_Mitra = ? WHERE Id_Mitra = ?");
     if ($stmt->execute([$status, $id])) {
         $message = $action === 'approve' ? 'Mitra berhasil disetujui.' : 'Mitra berhasil ditolak.';
         header("Location: approve_mitra.php?message=$message"); // Redirect dengan pesan sukses
