@@ -19,15 +19,15 @@ $pengguna = $stmt->fetch();
 $stmt = $pdo->prepare("
     SELECT 
         p.Id_Produk, 
-        p.nama AS nama_produk, 
-        p.deskripsi, 
-        p.harga, 
-        p.Foto_produk, 
-        p.stok, 
-        m.nama_toko 
+        p.Nama_Produk AS nama_produk, 
+        p.Deskripsi AS deskripsi, 
+        p.Harga AS harga, 
+        p.Foto_Produk AS Foto_produk, 
+        p.Stok AS stok, 
+        m.Nama_Toko AS nama_toko 
     FROM produk p 
-    JOIN mitra m ON p.id_mitra = m.id_mitra 
-    WHERE p.status = 'terkonfirmasi'
+    JOIN mitra m ON p.Id_Mitra = m.Id_Mitra 
+    WHERE p.Status_Produk = 'terkonfirmasi'
 ");
 $stmt->execute();
 $produk_list = $stmt->fetchAll();
@@ -43,13 +43,12 @@ $produk_list = $stmt->fetchAll();
     <script src="../assets/js/script.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <nav>
         <ul>
-            
             <li><a href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
             <li><a href="edit_profile.php">Edit Profil</a></li>
             <li><a href="../auth/logout.php?role=pengguna">Logout</a></li>
@@ -57,7 +56,7 @@ $produk_list = $stmt->fetchAll();
     </nav>
     
     <main>
-        <h1>Dashboard Pengguna: <?php echo htmlspecialchars($pengguna['nama']); ?></h1>
+        <h1>Dashboard Pengguna</h1>
         <p>Selamat datang di dashboard pengguna Anda. Gunakan menu di sidebar untuk navigasi.</p>
         
         <h2>Daftar Produk</h2>
