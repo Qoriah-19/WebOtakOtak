@@ -12,10 +12,10 @@ $user_id = $_SESSION['user_id'];
 
 // Ambil riwayat pesanan yang sudah dikonfirmasi oleh mitra
 $stmt = $pdo->prepare("
-    SELECT t.*, p.nama AS nama_produk 
+    SELECT t.*, p.Nama_Produk AS nama_produk 
     FROM transaksi t 
     JOIN produk p ON t.Id_Produk = p.Id_Produk 
-    WHERE t.Id_Pengguna = ? AND t.status = 'terkonfirmasi'
+    WHERE t.Id_Pengguna = ? 
 ");
 $stmt->execute([$user_id]);
 $riwayat_pesanan = $stmt->fetchAll();
@@ -27,7 +27,7 @@ $riwayat_pesanan = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Pesanan</title>
-    <!-- <link rel="stylesheet" href="assets/css/dashboard.css"> -->
+    <link rel="stylesheet" href="../assets/css/dashboard.css"> <!-- Pastikan untuk menggunakan file CSS terpisah -->
 </head>
 <body>
     <h1>Riwayat Pesanan</h1>
@@ -39,18 +39,17 @@ $riwayat_pesanan = $stmt->fetchAll();
                 <th>Nama Produk</th>
                 <th>Jumlah</th>
                 <th>Total Harga</th>
-                <th>Status</th>
+                <th>Status Pembayaran</th>
                 <th>Tanggal</th>
             </tr>
             <?php foreach ($riwayat_pesanan as $pesanan): ?>
             <tr>
                 <td><?php echo htmlspecialchars($pesanan['Id_Transaksi']); ?></td>
                 <td><?php echo htmlspecialchars($pesanan['nama_produk']); ?></td>
-                <td><?php echo htmlspecialchars($pesanan['jumlah']); ?></td>
-                <td>Rp<?php echo number_format($pesanan['total_harga'], 0, ',', '.'); ?></td>
-
-                <td><?php echo htmlspecialchars($pesanan['status']); ?></td>
-                <td><?php echo htmlspecialchars($pesanan['created_at']); ?></td>
+                <td><?php echo htmlspecialchars($pesanan['Jumlah']); ?></td>
+                <td>Rp <?php echo number_format($pesanan['Total_Harga'], 0, ',', '.'); ?></td>
+                <td><?php echo htmlspecialchars($pesanan['Status_Pembayaran']); ?></td>
+                <td><?php echo htmlspecialchars(date('d-m-Y H:i:s', strtotime($pesanan['created_at']))); ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -59,6 +58,7 @@ $riwayat_pesanan = $stmt->fetchAll();
     <?php endif; ?>
 </body>
 </html>
+
 <style>
 /* Reset default styling */
 * {
@@ -136,11 +136,6 @@ table tr:last-child td {
     th, td {
         padding: 12px;
     }
-}
-
-header {
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 p {
