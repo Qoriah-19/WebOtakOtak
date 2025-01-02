@@ -15,7 +15,7 @@ body {
     display: flex;
     justify-content: space-between; /* Logo kiri, menu kanan */
     align-items: center;
-    background-color: #025446; /* Warna navbar */
+    background-color:rgb(10, 44, 153); /* Warna navbar */
     padding: 15px 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
