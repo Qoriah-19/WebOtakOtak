@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Ambil data produk yang dimiliki oleh mitra yang sedang login 
+// Ambil data produk yang dimiliki oleh mitra yang sedang login dan statusnya terkonfirmasi
 $stmt = $pdo->prepare("SELECT * FROM produk WHERE Id_Mitra = ? ");
 $stmt->execute([$user_id]);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -89,7 +89,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td>Rp <?php echo number_format($product['Harga'], 0, ',', '.'); ?></td>
                     <td><?php echo htmlspecialchars($product['Status_Produk']); ?></td>
                     <td>
-                        
+                        <a href="update_order_status.php?id=<?php echo $pesanan['Id_Pesanan']; ?>">Ubah Status</a>
                         <a href="edit_produk.php?id=<?php echo $product['Id_Produk']; ?>">Edit</a> |
                         <a href="delete_produk.php?id=<?php echo $product['Id_Produk']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
                     </td>
