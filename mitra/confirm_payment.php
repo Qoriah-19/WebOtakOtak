@@ -10,12 +10,14 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id']; // Mendapatkan ID pengguna yang login
 
-// Ambil daftar transaksi milik pengguna tertentu dan urutkan berdasarkan tanggal
+// Ambil daftar transaksi yang statusnya 'menunggu' dan urutkan berdasarkan tanggal
 $stmt = $pdo->prepare("
-    SELECT t.*, u.Nama AS user_name 
+    SELECT t.*, u.Nama_Pengguna AS user_name 
     FROM transaksi t 
     JOIN pengguna u ON t.Id_Pengguna = u.Id_Pengguna
-    WHERE t.Id_Pengguna = ? 
+    WHERE t.Status_Pembayaran = 'menunggu' AND t.Id_Produk IN (
+        SELECT Id_Produk FROM produk WHERE Id_Mitra = ?
+    )
     ORDER BY t.created_at DESC
 ");
 $stmt->execute([$user_id]);
@@ -28,7 +30,7 @@ $transactions = $stmt->fetchAll(); // Ambil semua transaksi
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konfirmasi Pembayaran</title>
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/pembayaran.css">
     <style>
         table {
             width: 100%;
@@ -79,15 +81,15 @@ $transactions = $stmt->fetchAll(); // Ambil semua transaksi
                 <tr>
                     <td><?php echo htmlspecialchars($transaction['Id_Transaksi']); ?></td>
                     <td><?php echo htmlspecialchars($transaction['user_name']); ?></td>
-                    <td><?php echo htmlspecialchars($transaction['jumlah']); ?></td>
+                    <td><?php echo htmlspecialchars($transaction['Jumlah']); ?></td>
                     <td>
-                        <?php if (!empty($transaction['bukti_pembayaran'])): ?>
-                            <a href="../uploads/<?php echo htmlspecialchars($transaction['bukti_pembayaran']); ?>" target="_blank">Lihat Bukti</a>
+                        <?php if (!empty($transaction['Bukti_Pembayaran'])): ?>
+                            <a href="../uploads/<?php echo htmlspecialchars($transaction['Bukti_Pembayaran']); ?>" target="_blank">Lihat Bukti</a>
                         <?php else: ?>
                             Tidak ada bukti pembayaran
                         <?php endif; ?>
                     </td>
-                    <td><?php echo htmlspecialchars($transaction['status']); ?></td>
+                    <td><?php echo htmlspecialchars($transaction['Status_Pembayaran']); ?></td>
                     <td class="actions">
                         <a class="confirm" href="confirm_payment_action.php?id=<?php echo $transaction['Id_Transaksi']; ?>&action=confirm">Konfirmasi</a>
                         <a class="reject" href="confirm_payment_action.php?id=<?php echo $transaction['Id_Transaksi']; ?>&action=reject">Tolak</a>
