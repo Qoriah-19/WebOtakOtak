@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
         $deleteStmt = $pdo->prepare("DELETE FROM produk WHERE Id_Produk = ?");
         if ($deleteStmt->execute([$product_id])) {
             // Redirect setelah produk dihapus
-            header('Location: manage_produk.php?status=deleted');
+            header('Location: manage_produk.php?message=Produk berhasil dihapus.');
             exit();
         } else {
             echo "Terjadi kesalahan saat menghapus produk.";
