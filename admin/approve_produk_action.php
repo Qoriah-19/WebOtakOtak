@@ -28,8 +28,8 @@ try {
         $product = $stmt_check->fetch();
 
         if ($product) {
-            // Update status produk menjadi "approved"
-            $stmt = $pdo->prepare("UPDATE produk SET status = 'terkonfirmasi' WHERE Id_Produk = ?");
+            // Update status produk menjadi "terkonfirmasi"
+            $stmt = $pdo->prepare("UPDATE produk SET Status_Produk = 'terkonfirmasi' WHERE Id_Produk = ?");
             if ($stmt->execute([$id])) {
                 header('Location: approve_produk_mitra.php?message=Produk berhasil disetujui.');
                 exit();
