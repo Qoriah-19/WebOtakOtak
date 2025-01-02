@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Ambil daftar mitra dengan status "menunggu"
-$stmt = $pdo->prepare("SELECT * FROM mitra WHERE status = 'menunggu'");
+$stmt = $pdo->prepare("SELECT Id_Mitra, Nama_Mitra, Email_Mitra, Status_Mitra FROM mitra WHERE Status_Mitra = 'menunggu'");
 $stmt->execute();
 $mitra_list = $stmt->fetchAll();
 ?>
@@ -20,7 +20,7 @@ $mitra_list = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Approve Mitra</title>
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/approve.css">
 </head>
 <body>
     <h1>Daftar Mitra Menunggu Persetujuan</h1>
@@ -35,7 +35,7 @@ $mitra_list = $stmt->fetchAll();
     <table border="1">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>ID Mitra</th>
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Status</th>
@@ -46,9 +46,9 @@ $mitra_list = $stmt->fetchAll();
             <?php foreach ($mitra_list as $mitra): ?>
             <tr>
                 <td><?php echo htmlspecialchars($mitra['Id_Mitra']); ?></td>
-                <td><?php echo htmlspecialchars($mitra['nama']); ?></td>
-                <td><?php echo htmlspecialchars($mitra['email']); ?></td>
-                <td><?php echo htmlspecialchars($mitra['status']); ?></td>
+                <td><?php echo htmlspecialchars($mitra['Nama_Mitra']); ?></td>
+                <td><?php echo htmlspecialchars($mitra['Email_Mitra']); ?></td>
+                <td><?php echo htmlspecialchars($mitra['Status_Mitra']); ?></td>
                 <td>
                     <a href="approve_mitra_action.php?id=<?php echo $mitra['Id_Mitra']; ?>&action=approve">Setujui</a>
                     <a href="approve_mitra_action.php?id=<?php echo $mitra['Id_Mitra']; ?>&action=reject">Tolak</a>
