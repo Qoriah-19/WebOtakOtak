@@ -2,28 +2,78 @@
 require '../service/connection.php';
 session_start();
 
-// Periksa apakah pengguna sudah login
+// Pastikan pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
     header('Location: auth/login_user.php');
     exit();
 }
 
-// Ambil semua produk dengan status 'terkonfirmasi' beserta data mitra
-$stmt = $pdo->prepare("
-    SELECT 
-        p.Id_Produk, 
-        p.nama AS nama_produk, 
-        p.deskripsi, 
-        p.harga, 
-        p.Foto_produk, 
-        p.stok, 
-        m.nama_toko 
-    FROM produk p 
-    JOIN mitra m ON p.id_mitra = m.id_mitra 
-    WHERE p.status = 'terkonfirmasi'
-");
-$stmt->execute();
-$produk_list = $stmt->fetchAll();
+// Cek apakah ID produk ada di URL
+if (isset($_GET['id'])) {
+    $id_produk = (int)$_GET['id'];
+
+    // Ambil data produk
+    $stmt = $pdo->prepare("SELECT * FROM produk WHERE Id_Produk = ?");
+    $stmt->execute([$id_produk]);
+    $produk = $stmt->fetch();
+
+    if (!$produk) {
+        header('Location: lihat_produk.php?error=Produk tidak ditemukan.');
+        exit();
+    }
+} else {
+    header('Location: lihat_produk.php?error=ID produk tidak ditemukan.');
+    exit();
+}
+
+$error = ''; // Inisialisasi variabel error
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $user_id = $_SESSION['user_id'];
+    $jumlah = (int)$_POST['jumlah'];
+    $total_harga = $produk['Harga'] * $jumlah;
+    $status = 'menunggu';
+
+    // Validasi jumlah
+    if ($jumlah <= 0) {
+        $error = "Jumlah harus lebih dari 0.";
+    } else {
+        // Cek apakah user_id valid
+        $stmt = $pdo->prepare("SELECT * FROM pengguna WHERE Id_Pengguna = ?");
+        $stmt->execute([$user_id]);
+        if (!$stmt->fetch()) {
+            $error = "User ID tidak valid.";
+        } else {
+            // Upload bukti pembayaran
+            if (isset($_FILES['bukti_pembayaran']) && $_FILES['bukti_pembayaran']['error'] == UPLOAD_ERR_OK) {
+                $file_tmp = $_FILES['bukti_pembayaran']['tmp_name'];
+                $file_name = time() . '_' . basename($_FILES['bukti_pembayaran']['name']);
+                $upload_dir = '../uploads/';
+                $upload_path = $upload_dir . $file_name;
+
+                if (move_uploaded_file($file_tmp, $upload_path)) {
+                    // Masukkan data ke tabel transaksi
+                    $stmt = $pdo->prepare("INSERT INTO transaksi (Id_Pengguna, Id_Produk, Jumlah, Total_Harga, Status_Pembayaran, Bukti_Pembayaran) VALUES (?, ?, ?, ?, ?, ?)");
+                    if ($stmt->execute([$user_id, $id_produk, $jumlah, $total_harga, $status, $file_name])) {
+                        // Simpan konfirmasi pesanan ke tabel konfirmasi_pesanan
+                        $stmt = $pdo->prepare("INSERT INTO konfirmasi_pesanan (Id_Produk, Id_Pengguna, Jumlah, Total_Harga) VALUES (?, ?, ?, ?)");
+                        $stmt->execute([$id_produk, $user_id, $jumlah, $total_harga]);
+
+                        // Redirect ke dashboard dengan pesan sukses
+                        header('Location: dashboard.php?message=Pemesanan berhasil! Silakan tunggu konfirmasi.');
+                        exit();
+                    } else {
+                        $error = "Gagal menyimpan transaksi. Silakan coba lagi.";
+                    }
+                } else {
+                    $error = "Gagal mengunggah bukti pembayaran.";
+                }
+            } else {
+                $error = "Harap unggah bukti pembayaran.";
+            }
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,89 +81,43 @@ $produk_list = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Produk</title>
-    <link rel="stylesheet" href="../assets/css/auth.css">
-    <script src="../assets/js/script.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Pemesanan Produk</title>
+    <link rel="stylesheet" href="../assets/css/pemesanan.css">
 </head>
 <body>
-    <h1>Daftar Produk</h1>
-    <div class="produk-container">
-        <?php if (count($produk_list) > 0): ?>
-            <?php foreach ($produk_list as $produk): ?>
-                <div class="produk-card">
-                    <img src="../uploads/<?php echo htmlspecialchars($produk['Foto_produk']); ?>" alt="Gambar <?php echo htmlspecialchars($produk['nama_produk']); ?>" class="produk-gambar">
-                    <h2><?php echo htmlspecialchars($produk['nama_produk']); ?></h2>
-                    <p><strong>Deskripsi:</strong> <?php echo htmlspecialchars($produk['deskripsi']); ?></p>
-                    <p><strong>Harga:</strong> Rp <?php echo number_format($produk['harga'], 0, ',', '.'); ?></p>
-                    <p><strong>Stok:</strong> <?php echo htmlspecialchars($produk['stok']); ?></p>
-                    <p><strong>Nama Mitra:</strong> <?php echo htmlspecialchars($produk['nama_toko']); ?></p>
-                    <a href="pesan_produk.php?id=<?php echo $produk['Id_Produk']; ?>" class="btn-pesan">Pesan</a>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Tidak ada produk yang tersedia saat ini.</p>
+    <h1>Pemesanan Produk: <?php echo htmlspecialchars($produk['Nama_Produk']); ?></h1>
+    <p>Harga per unit: Rp <?php echo number_format($produk['Harga'], 0, ',', '.'); ?></p>
+    
+    <form action="pesan_produk.php?id=<?php echo $produk['Id_Produk']; ?>" method="post" enctype="multipart/form-data">
+        <label for="jumlah">Jumlah:</label>
+        <input type="number" id="jumlah" name="jumlah" placeholder="Jumlah" min="1" required>
+        
+        <!-- Total Harga (dihitung otomatis) -->
+        <p>Total Harga: Rp <span id="total_harga">0</span></p>
+
+        <label for="bukti_pembayaran">Bukti Pembayaran:</label>
+        <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" accept="image/*" required>
+        
+        <?php if (!empty($error)): ?>
+            <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
-    </div>
+        
+        <button type="submit">Pesan</button>
+    </form>
+
+    <script>
+        // Script untuk menghitung total harga berdasarkan jumlah yang dimasukkan
+        const hargaPerUnit = <?php echo $produk['Harga']; ?>;
+        
+        // Event listener untuk input jumlah
+        const jumlahInput = document.getElementById('jumlah');
+        const totalHargaElem = document.getElementById('total_harga');
+        
+        jumlahInput.addEventListener('input', function() {
+            const jumlah = parseInt(jumlahInput.value) || 0;
+            const totalHarga = hargaPerUnit * jumlah;
+            totalHargaElem.textContent = totalHarga.toLocaleString('id-ID');
+        });
+    </script>
 </body>
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-        text-align: center;
-    }
-    h1 {
-        margin: 20px 0;
-        color: #333;
-    }
-    .produk-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        padding: 20px;
-    }
-    .produk-card {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        width: 300px;
-        padding: 15px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: left;
-    }
-    .produk-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-    .produk-card h2 {
-        font-size: 18px;
-        margin: 10px 0;
-        color: #333;
-    }
-    .produk-card p {
-        font-size: 14px;
-        color: #555;
-        margin: 5px 0;
-    }
-    .btn-pesan {
-        display: inline-block;
-        text-decoration: none;
-        background-color: #007BFF;
-        color: #fff;
-        padding: 10px 15px;
-        border-radius: 5px;
-        margin-top: 10px;
-        text-align: center;
-    }
-    .btn-pesan:hover {
-        background-color: #0056b3;
-    }
-</style>
 </html>
