@@ -21,12 +21,7 @@
             </li>
 
             <li>
-                <a href="index.php?page=news">Profil Sungai Enam</a>
-                <ul class="dropdown">
-                    
-                    <li> <a href="pages/sejarah.php" class="dropdown-item">Sejarah</a></li>
-                  
-                </ul>
+                <a href="pages/sejarah.php">Sejarah</a>
             </li>
 
 
