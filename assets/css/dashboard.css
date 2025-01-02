@@ -1,103 +1,113 @@
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins", sans-serif; /* Menetapkan font default untuk seluruh halaman */
+    background-color: #f7f7f7; /* Warna latar belakang halaman */
 }
 
-/* Main container */
-h1 {
-    text-align: center;
-    margin: 20px 0;
-    color: #2c3e50;
-}
-
-/* Navigation */
 nav {
-    background-color: #3498db;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 20px auto;
-    width: 80%;
+    background-color: #003466; /* Warna latar belakang navbar */
+    padding: 15px; /* Padding dalam navbar */
 }
 
 nav ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
+    list-style: none; /* Menghilangkan bullet points */
+    display: flex; /* Mengatur navbar menjadi flexbox */
+    justify-content: space-around; /* Menyebar item navbar */
+    margin: 0; /* Menghilangkan margin */
+    padding: 0; /* Menghilangkan padding */
 }
 
 nav ul li {
-    margin: 0 10px;
+    margin: 0 15px; /* Jarak antar item navbar */
 }
 
 nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    text-decoration: none; /* Menghilangkan garis bawah pada link */
+    color: white; /* Warna teks link */
+    font-weight: 500; /* Bobot font untuk link */
+    transition: color 0.3s; /* Transisi halus untuk perubahan warna */
 }
 
 nav ul li a:hover {
-    background-color: #2980b9;
+    color: #FFD700; /* Warna teks saat hover */
 }
 
-/* Table styles */
-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background-color: white;
-    border-radius: 5px;
-    overflow: hidden;
+.upload-text {
+    font-size: 24px; /* Ukuran font untuk teks upload */
+    font-weight: 600; /* Bobot font untuk teks upload */
+    margin: 20px 0; /* Jarak atas dan bawah untuk teks upload */
+    text-align: center; /* Pusatkan teks */
 }
 
-table th, table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.form-container {
+    background-color: white; /* Warna latar belakang form */
+    border-radius: 10px; /* Sudut melengkung untuk form */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk form */
+    padding: 20px; /* Padding dalam form */
+    width: 80%; /* Lebar form */
+    max-width: 600px; /* Lebar maksimum form */
+    margin: 20px auto; /* Pusatkan form dengan margin atas dan bawah */
 }
 
-table th {
-    background-color: #3498db;
-    color: white;
+.form-container label {
+    font-weight: 600; /* Bobot font untuk label */
+    margin-bottom: 5px; /* Jarak bawah untuk label */
+    display: block; /* Membuat label menjadi block */
 }
 
-table tr:hover {
-    background-color: #f1f1f1;
+.form-container input,
+.form-container textarea {
+    margin-bottom: 20px; /* Jarak bawah untuk input dan textarea */
+    width: 100%; /* Lebar input dan textarea */
+    padding: 12px 15px; /* Padding dalam input dan textarea */
+    font-size: 14px; /* Ukuran font dalam input dan textarea */
+    border: 1px solid #d3d3d3; /* Border input dan textarea */
+    border-radius: 0.75rem; /* Sudut melengkung */
+    filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06)); /* Efek bayangan */
 }
 
-/* Button styles */
+input:focus,
+textarea:focus {
+    outline: none; /* Menghilangkan outline saat fokus */
+    border-color: #003466; /* Mengubah warna border saat fokus */
+}
+
+input::placeholder,
+textarea::placeholder {
+    font-weight: 500; /* Bobot font untuk placeholder */
+    text-transform: capitalize; /* Mengubah teks placeholder menjadi huruf kapital */
+}
+
 button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: #003466; /* Warna latar belakang tombol */
+    padding: 10px; /* Padding dalam tombol */
+    border: none; /* Menghilangkan border */
+    width: 100%; /* Lebar tombol */
+    border-radius: 0.75rem; /* Sudut melengkung tombol */
+    cursor: pointer; /* Mengubah kursor saat hover */
+    font-weight: 600; /* Bobot font untuk tombol */
+    color: white; /* Warna teks tombol */
+    transition: background-color 0.3s ease; /* Transisi halus untuk perubahan warna latar belakang */
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #0056b3; /* Warna latar belakang saat hover */
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
+.success {
+    color: green; /* Warna untuk pesan sukses */
+    margin-top: 10px; /* Jarak atas untuk pesan sukses */
+}
 
-    table {
-        width: 95%;
+.error {
+    color: red; /* Warna untuk pesan error */
+    margin-top: 10px; /* Jarak atas untuk pesan error */
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .form-container {
+        width: 90%; /* Lebar form pada perangkat kecil */
     }
 }
